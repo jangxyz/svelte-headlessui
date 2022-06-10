@@ -19,7 +19,7 @@ function onClick(event) {
 ## Installation
 
 ```
-npm install -D https://github.com/jangxyz/svelte-headlessui/package
+npm install -D github:jangxyz/svelte-headlessui#package
 ```
 
 ## Usage

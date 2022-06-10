@@ -1,4 +1,4 @@
-<script context="module">import { getContext, setContext } from "svelte";
+<script  context="module">import { getContext, setContext } from "svelte";
 import { writable } from "svelte/store";
 const PORTAL_GROUP_CONTEXT_NAME = "headlessui-portal-group-context";
 export function usePortalGroupContext() {
@@ -6,7 +6,7 @@ export function usePortalGroupContext() {
 }
 </script>
 
-<script>export let target;
+<script >export let target;
 let targetStore = writable(target);
 setContext(PORTAL_GROUP_CONTEXT_NAME, targetStore);
 $: targetStore.set(target);

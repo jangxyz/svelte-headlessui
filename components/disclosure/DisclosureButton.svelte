@@ -1,7 +1,7 @@
-<script context="module">"use strict";
+<script  context="module">"use strict";
 </script>
 
-<script>import { useDisclosureContext, DisclosureStates } from "./Disclosure.svelte";
+<script >import { useDisclosureContext, DisclosureStates } from "./Disclosure.svelte";
 import { usePanelContext } from "./DisclosurePanel.svelte";
 import { Keys } from "../../utils/keyboard";
 import { forwardEventsBuilder } from "../../internal/forwardEventsBuilder";

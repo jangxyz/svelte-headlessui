@@ -1,7 +1,7 @@
-<script context="module">"use strict";
+<script  context="module">"use strict";
 </script>
 
-<script>import { DialogStates, useDialogContext } from "./Dialog.svelte";
+<script >import { DialogStates, useDialogContext } from "./Dialog.svelte";
 import { useId } from "../../hooks/use-id";
 import { onMount } from "svelte";
 import { forwardEventsBuilder } from "../../internal/forwardEventsBuilder";

@@ -1,4 +1,4 @@
-<script>import { Keys } from "../../utils/keyboard";
+<script >import { Keys } from "../../utils/keyboard";
 import { focusElement, focusIn, Focus, FocusResult, } from "../../utils/focus-management";
 import { contains } from "../../internal/dom-containers";
 import { onMount, onDestroy, tick } from "svelte";

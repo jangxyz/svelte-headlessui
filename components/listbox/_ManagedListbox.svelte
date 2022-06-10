@@ -1,4 +1,4 @@
-<script>import Listbox from "./Listbox.svelte";
+<script >import Listbox from "./Listbox.svelte";
 export let value;
 </script>
 

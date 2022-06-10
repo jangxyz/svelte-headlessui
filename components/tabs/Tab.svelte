@@ -1,7 +1,7 @@
-<script context="module">"use strict";
+<script  context="module">"use strict";
 </script>
 
-<script>import { onMount } from "svelte";
+<script >import { onMount } from "svelte";
 import { Focus, focusIn } from "../../utils/focus-management";
 import { Keys } from "../../utils/keyboard";
 import { match } from "../../utils/match";

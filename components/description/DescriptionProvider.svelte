@@ -1,10 +1,10 @@
-<script context="module">const DESCRIPTION_CONTEXT_NAME = "headlessui-description-context";
+<script  context="module">const DESCRIPTION_CONTEXT_NAME = "headlessui-description-context";
 export function useDescriptionContext() {
     return getContext(DESCRIPTION_CONTEXT_NAME);
 }
 </script>
 
-<script>import { getContext, setContext } from "svelte";
+<script >import { getContext, setContext } from "svelte";
 import { writable } from "svelte/store";
 export let name;
 export let slotProps = {};

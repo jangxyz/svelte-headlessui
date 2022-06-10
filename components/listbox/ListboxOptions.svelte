@@ -1,7 +1,7 @@
-<script context="module">"use strict";
+<script  context="module">"use strict";
 </script>
 
-<script>import { tick } from "svelte";
+<script >import { tick } from "svelte";
 import { ListboxStates, useListboxContext } from "./Listbox.svelte";
 import { useId } from "../../hooks/use-id";
 import { match } from "../../utils/match";

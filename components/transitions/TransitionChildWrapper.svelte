@@ -1,4 +1,4 @@
-<script>import { hasOpenClosed } from "../../internal/open-closed";
+<script >import { hasOpenClosed } from "../../internal/open-closed";
 import TransitionChild from "./TransitionChild.svelte";
 import TransitionRoot, {} from "./TransitionRoot.svelte";
 import { forwardEventsBuilder } from "../../internal/forwardEventsBuilder";

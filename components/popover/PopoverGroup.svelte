@@ -1,10 +1,10 @@
-<script context="module">const POPOVER_GROUP_CONTEXT_NAME = "headlessui-popover-group-context";
+<script  context="module">const POPOVER_GROUP_CONTEXT_NAME = "headlessui-popover-group-context";
 export function usePopoverGroupContext() {
     return getContext(POPOVER_GROUP_CONTEXT_NAME);
 }
 </script>
 
-<script>import { getContext, setContext } from "svelte";
+<script >import { getContext, setContext } from "svelte";
 import { forwardEventsBuilder } from "../../internal/forwardEventsBuilder";
 import { get_current_component } from "svelte/internal";
 import Render from "../../utils/Render.svelte";

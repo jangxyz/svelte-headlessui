@@ -1,4 +1,4 @@
-<script context="module">function isSingleComponent(props) {
+<script  context="module">function isSingleComponent(props) {
     return (typeof props === "string" ||
         (Array.isArray(props) &&
             !Array.isArray(props[0]) &&
@@ -7,7 +7,7 @@
 export {};
 </script>
 
-<script>export let allProps;
+<script >export let allProps;
 let spreadProps = {};
 let onChange = () => { };
 let onClose = () => { };

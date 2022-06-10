@@ -1,7 +1,7 @@
-<script context="module">"use strict";
+<script  context="module">"use strict";
 </script>
 
-<script>import { useTabsContext } from "./TabGroup.svelte";
+<script >import { useTabsContext } from "./TabGroup.svelte";
 import { forwardEventsBuilder } from "../../internal/forwardEventsBuilder";
 import { get_current_component } from "svelte/internal";
 import Render from "../../utils/Render.svelte";

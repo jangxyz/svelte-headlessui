@@ -1,4 +1,4 @@
-<script context="module">import { Focus, calculateActiveIndex, } from "../../utils/calculate-active-index";
+<script  context="module">import { Focus, calculateActiveIndex, } from "../../utils/calculate-active-index";
 import { getContext, setContext } from "svelte";
 import { writable } from "svelte/store";
 import { State, useOpenClosedProvider } from "../../internal/open-closed";
@@ -21,7 +21,7 @@ export function useMenuContext(componentName) {
 }
 </script>
 
-<script>export let use = [];
+<script >export let use = [];
 export let as = "div";
 /***** Events *****/
 const forwardEvents = forwardEventsBuilder(get_current_component());

@@ -1,10 +1,10 @@
-<script context="module">const POPOVER_PANEL_CONTEXT_NAME = "headlessui-popover-panel-context";
+<script  context="module">const POPOVER_PANEL_CONTEXT_NAME = "headlessui-popover-panel-context";
 export function usePopoverPanelContext() {
     return getContext(POPOVER_PANEL_CONTEXT_NAME);
 }
 </script>
 
-<script>import { Keys } from "../../utils/keyboard";
+<script >import { Keys } from "../../utils/keyboard";
 import { State, useOpenClosed } from "../../internal/open-closed";
 import { getFocusableElements, Focus, FocusResult, focusIn, } from "../../utils/focus-management";
 import { getContext, setContext } from "svelte";

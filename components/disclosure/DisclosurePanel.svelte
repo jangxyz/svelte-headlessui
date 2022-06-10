@@ -1,11 +1,11 @@
-<script context="module">import { getContext, setContext } from "svelte";
+<script  context="module">import { getContext, setContext } from "svelte";
 let DISCLOSURE_PANEL_CONTEXT_NAME = "headlessui-disclosure-panel-context";
 export function usePanelContext() {
     return getContext(DISCLOSURE_PANEL_CONTEXT_NAME);
 }
 </script>
 
-<script>import { useDisclosureContext, DisclosureStates } from "./Disclosure.svelte";
+<script >import { useDisclosureContext, DisclosureStates } from "./Disclosure.svelte";
 import { State, useOpenClosed } from "../../internal/open-closed";
 import { forwardEventsBuilder } from "../../internal/forwardEventsBuilder";
 import { get_current_component } from "svelte/internal";

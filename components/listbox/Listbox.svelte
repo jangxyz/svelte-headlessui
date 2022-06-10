@@ -1,4 +1,4 @@
-<script context="module">export var ListboxStates;
+<script  context="module">export var ListboxStates;
 (function (ListboxStates) {
     ListboxStates[ListboxStates["Open"] = 0] = "Open";
     ListboxStates[ListboxStates["Closed"] = 1] = "Closed";
@@ -13,7 +13,7 @@ export function useListboxContext(component) {
 }
 </script>
 
-<script>import { Focus, calculateActiveIndex, } from "../../utils/calculate-active-index";
+<script >import { Focus, calculateActiveIndex, } from "../../utils/calculate-active-index";
 import { createEventDispatcher, getContext, setContext } from "svelte";
 import { writable } from "svelte/store";
 import { match } from "../../utils/match";

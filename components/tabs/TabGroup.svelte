@@ -1,4 +1,4 @@
-<script context="module">const TABS_CONTEXT_NAME = "headlessui-tabs-context";
+<script  context="module">const TABS_CONTEXT_NAME = "headlessui-tabs-context";
 export function useTabsContext(component) {
     let context = getContext(TABS_CONTEXT_NAME);
     if (context === undefined) {
@@ -8,7 +8,7 @@ export function useTabsContext(component) {
 }
 </script>
 
-<script>import { createEventDispatcher, getContext, onMount, setContext, } from "svelte";
+<script >import { createEventDispatcher, getContext, onMount, setContext, } from "svelte";
 import { writable } from "svelte/store";
 import { forwardEventsBuilder } from "../../internal/forwardEventsBuilder";
 import { get_current_component } from "svelte/internal";

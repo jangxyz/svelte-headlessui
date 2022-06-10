@@ -1,7 +1,7 @@
-<script context="module">"use strict";
+<script  context="module">"use strict";
 </script>
 
-<script>import { Keys } from "../../utils/keyboard";
+<script >import { Keys } from "../../utils/keyboard";
 import { getFocusableElements, Focus, focusIn, } from "../../utils/focus-management";
 import { writable } from "svelte/store";
 import { PopoverStates, usePopoverContext } from "./Popover.svelte";

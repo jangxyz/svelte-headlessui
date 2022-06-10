@@ -1,4 +1,4 @@
-<script context="module">export var PopoverStates;
+<script  context="module">export var PopoverStates;
 (function (PopoverStates) {
     PopoverStates[PopoverStates["Open"] = 0] = "Open";
     PopoverStates[PopoverStates["Closed"] = 1] = "Closed";
@@ -13,7 +13,7 @@ export function usePopoverContext(component) {
 }
 </script>
 
-<script>import { match } from "../../utils/match";
+<script >import { match } from "../../utils/match";
 import { useId } from "../../hooks/use-id";
 import { isFocusableElement, FocusableMode, } from "../../utils/focus-management";
 import { State, useOpenClosedProvider } from "../../internal/open-closed";

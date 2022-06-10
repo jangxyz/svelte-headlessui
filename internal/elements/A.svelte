@@ -1,4 +1,4 @@
-<script>import { useActions } from "../../hooks/use-actions";
+<script >import { useActions } from "../../hooks/use-actions";
 import { get_current_component } from "svelte/internal";
 import { forwardEventsBuilder } from "../forwardEventsBuilder";
 export let use = [];

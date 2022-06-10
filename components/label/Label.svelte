@@ -1,4 +1,4 @@
-<script>import Render from "../../utils/Render.svelte";
+<script >import Render from "../../utils/Render.svelte";
 import { useId } from "../../hooks/use-id";
 import { forwardEventsBuilder } from "../../internal/forwardEventsBuilder";
 import { onMount } from "svelte";

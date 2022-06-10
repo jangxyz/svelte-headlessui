@@ -1,4 +1,4 @@
-<script context="module">import DescriptionProvider from "../description/DescriptionProvider.svelte";
+<script  context="module">import DescriptionProvider from "../description/DescriptionProvider.svelte";
 import LabelProvider from "../label/LabelProvider.svelte";
 import { createEventDispatcher, getContext, setContext } from "svelte";
 import { writable } from "svelte/store";
@@ -15,7 +15,7 @@ export function useRadioGroupContext(component) {
 }
 </script>
 
-<script>import { treeWalker } from "../../hooks/use-tree-walker";
+<script >import { treeWalker } from "../../hooks/use-tree-walker";
 import { forwardEventsBuilder } from "../../internal/forwardEventsBuilder";
 import { get_current_component } from "svelte/internal";
 import Render from "../../utils/Render.svelte";

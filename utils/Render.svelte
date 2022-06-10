@@ -1,4 +1,4 @@
-<script context="module">import { isValidElement } from "../internal/elements";
+<script  context="module">import { isValidElement } from "../internal/elements";
 import { get_current_component } from "svelte/internal";
 export var RenderStrategy;
 (function (RenderStrategy) {
@@ -7,7 +7,7 @@ export var RenderStrategy;
 })(RenderStrategy || (RenderStrategy = {}));
 </script>
 
-<script>import { useActions } from "../hooks/use-actions";
+<script >import { useActions } from "../hooks/use-actions";
 import { forwardEventsBuilder } from "../internal/forwardEventsBuilder";
 import { Features } from "../types";
 const forwardEvents = forwardEventsBuilder(get_current_component());

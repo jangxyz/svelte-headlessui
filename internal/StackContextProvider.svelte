@@ -1,4 +1,4 @@
-<script context="module">export var StackMessage;
+<script  context="module">export var StackMessage;
 (function (StackMessage) {
     StackMessage[StackMessage["Add"] = 0] = "Add";
     StackMessage[StackMessage["Remove"] = 1] = "Remove";
@@ -6,7 +6,7 @@
 const STACK_CONTEXT_NAME = "headlessui-stack-context";
 </script>
 
-<script>import { getContext, onDestroy, setContext } from "svelte";
+<script >import { getContext, onDestroy, setContext } from "svelte";
 export let onUpdate;
 export let element;
 function notify(...args) {

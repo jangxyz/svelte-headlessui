@@ -1,4 +1,4 @@
-<script>import NestedDialog from "./_NestedDialog.svelte";
+<script >import NestedDialog from "./_NestedDialog.svelte";
 let open = false;
 </script>
 

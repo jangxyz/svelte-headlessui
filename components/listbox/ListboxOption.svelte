@@ -1,7 +1,7 @@
-<script context="module">"use strict";
+<script  context="module">"use strict";
 </script>
 
-<script>import { onDestroy, onMount, tick } from "svelte";
+<script >import { onDestroy, onMount, tick } from "svelte";
 import { ListboxStates, useListboxContext } from "./Listbox.svelte";
 import { useId } from "../../hooks/use-id";
 import { Focus } from "../../utils/calculate-active-index";

@@ -1,7 +1,7 @@
-<script context="module">"use strict";
+<script  context="module">"use strict";
 </script>
 
-<script>import { useSwitchContext } from "./SwitchGroup.svelte";
+<script >import { useSwitchContext } from "./SwitchGroup.svelte";
 import { useLabelContext } from "../label/LabelProvider.svelte";
 import { useDescriptionContext } from "../description/DescriptionProvider.svelte";
 import { useId } from "../../hooks/use-id";

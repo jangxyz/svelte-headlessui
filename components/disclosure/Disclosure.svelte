@@ -1,4 +1,4 @@
-<script context="module">import { writable } from "svelte/store";
+<script  context="module">import { writable } from "svelte/store";
 import { getContext, setContext } from "svelte";
 export var DisclosureStates;
 (function (DisclosureStates) {
@@ -15,7 +15,7 @@ export function useDisclosureContext(component) {
 }
 </script>
 
-<script>import { useId } from "../../hooks/use-id";
+<script >import { useId } from "../../hooks/use-id";
 import { match } from "../../utils/match";
 import { State, useOpenClosedProvider } from "../../internal/open-closed";
 import { forwardEventsBuilder } from "../../internal/forwardEventsBuilder";

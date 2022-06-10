@@ -1,7 +1,7 @@
-<script context="module">"use strict";
+<script  context="module">"use strict";
 </script>
 
-<script>import { onDestroy } from "svelte";
+<script >import { onDestroy } from "svelte";
 import DescriptionProvider from "../description/DescriptionProvider.svelte";
 import LabelProvider from "../label/LabelProvider.svelte";
 import { useRadioGroupContext } from "./RadioGroup.svelte";

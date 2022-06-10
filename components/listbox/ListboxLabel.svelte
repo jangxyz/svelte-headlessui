@@ -1,7 +1,7 @@
-<script context="module">"use strict";
+<script  context="module">"use strict";
 </script>
 
-<script>import { ListboxStates, useListboxContext } from "./Listbox.svelte";
+<script >import { ListboxStates, useListboxContext } from "./Listbox.svelte";
 import { useId } from "../../hooks/use-id";
 import Render from "../../utils/Render.svelte";
 import { forwardEventsBuilder } from "../../internal/forwardEventsBuilder";

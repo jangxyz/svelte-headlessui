@@ -1,7 +1,7 @@
-<script context="module">export {};
+<script  context="module">export {};
 </script>
 
-<script>import { onMount, setContext } from "svelte";
+<script >import { onMount, setContext } from "svelte";
 import { writable } from "svelte/store";
 import { match } from "../../utils/match";
 import { State, useOpenClosed } from "../../internal/open-closed";

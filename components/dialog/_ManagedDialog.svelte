@@ -1,4 +1,4 @@
-<script>import Dialog from "./Dialog.svelte";
+<script >import Dialog from "./Dialog.svelte";
 // This component is only for use in tests
 export let initialOpen = false;
 export let onClose = () => { };

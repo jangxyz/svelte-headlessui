@@ -1,7 +1,7 @@
-<script context="module">"use strict";
+<script  context="module">"use strict";
 </script>
 
-<script>import { useMenuContext, MenuStates } from "./Menu.svelte";
+<script >import { useMenuContext, MenuStates } from "./Menu.svelte";
 import { useId } from "../../hooks/use-id";
 import { Focus } from "../../utils/calculate-active-index";
 import { afterUpdate, onDestroy, onMount, tick } from "svelte";

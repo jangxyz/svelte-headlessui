@@ -1,10 +1,10 @@
-<script context="module">const SWITCH_CONTEXT_NAME = "headlessui-switch-context";
+<script  context="module">const SWITCH_CONTEXT_NAME = "headlessui-switch-context";
 export function useSwitchContext() {
     return getContext(SWITCH_CONTEXT_NAME);
 }
 </script>
 
-<script>import DescriptionProvider from "../description/DescriptionProvider.svelte";
+<script >import DescriptionProvider from "../description/DescriptionProvider.svelte";
 import LabelProvider from "../label/LabelProvider.svelte";
 import { getContext, setContext } from "svelte";
 import { writable } from "svelte/store";

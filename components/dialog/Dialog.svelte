@@ -1,4 +1,4 @@
-<script context="module">import { getContext, setContext, createEventDispatcher, tick, onDestroy, onMount, } from "svelte";
+<script  context="module">import { getContext, setContext, createEventDispatcher, tick, onDestroy, onMount, } from "svelte";
 export var DialogStates;
 (function (DialogStates) {
     DialogStates[DialogStates["Open"] = 0] = "Open";
@@ -14,7 +14,7 @@ export function useDialogContext(component) {
 }
 </script>
 
-<script>import { State, useOpenClosed } from "../../internal/open-closed";
+<script >import { State, useOpenClosed } from "../../internal/open-closed";
 import { writable } from "svelte/store";
 import { match } from "../../utils/match";
 import { useId } from "../../hooks/use-id";

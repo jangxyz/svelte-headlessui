@@ -1,7 +1,7 @@
-<script context="module">"use strict";
+<script  context="module">"use strict";
 </script>
 
-<script>import { onMount } from "svelte";
+<script >import { onMount } from "svelte";
 import { useTabsContext } from "./TabGroup.svelte";
 import { useId } from "../../hooks/use-id";
 import { forwardEventsBuilder } from "../../internal/forwardEventsBuilder";

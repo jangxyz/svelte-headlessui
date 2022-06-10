@@ -1,7 +1,7 @@
-<script context="module">"use strict";
+<script  context="module">"use strict";
 </script>
 
-<script>import { State, useOpenClosed } from "../../internal/open-closed";
+<script >import { State, useOpenClosed } from "../../internal/open-closed";
 import { PopoverStates, usePopoverContext } from "./Popover.svelte";
 import { forwardEventsBuilder } from "../../internal/forwardEventsBuilder";
 import { get_current_component } from "svelte/internal";

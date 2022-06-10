@@ -1,4 +1,4 @@
-<script context="module">import { match } from "../../utils/match";
+<script  context="module">import { match } from "../../utils/match";
 import { RenderStrategy } from "../../utils/Render.svelte";
 import { getContext } from "svelte";
 export var TreeStates;

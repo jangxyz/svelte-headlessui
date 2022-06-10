@@ -1,4 +1,4 @@
-<script>import { usePortalGroupContext } from "./PortalGroup.svelte";
+<script >import { usePortalGroupContext } from "./PortalGroup.svelte";
 import { usePortalRoot } from "../../internal/ForcePortalRootContext.svelte";
 import { portal } from "../../hooks/use-portal";
 import { tick } from "svelte";

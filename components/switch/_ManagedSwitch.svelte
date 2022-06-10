@@ -1,4 +1,4 @@
-<script>import Switch from "./Switch.svelte";
+<script >import Switch from "./Switch.svelte";
 // This component is only for use in tests
 export let initialChecked = false;
 export let onChange = () => { };

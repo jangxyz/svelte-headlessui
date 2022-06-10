@@ -1,4 +1,4 @@
-<script context="module">import { getContext, setContext } from "svelte";
+<script  context="module">import { getContext, setContext } from "svelte";
 import { writable } from "svelte/store";
 const FORCE_PORTAL_ROOT_CONTEXT_NAME = "headlessui-force-portal-root-context";
 export function usePortalRoot() {
@@ -6,7 +6,7 @@ export function usePortalRoot() {
 }
 </script>
 
-<script>export let force;
+<script >export let force;
 setContext(FORCE_PORTAL_ROOT_CONTEXT_NAME, writable(force));
 </script>
 

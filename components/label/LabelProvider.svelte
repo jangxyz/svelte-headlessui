@@ -1,10 +1,10 @@
-<script context="module">const LABEL_CONTEXT_NAME = "headlessui-label-context";
+<script  context="module">const LABEL_CONTEXT_NAME = "headlessui-label-context";
 export function useLabelContext() {
     return getContext(LABEL_CONTEXT_NAME);
 }
 </script>
 
-<script>import { getContext, setContext } from "svelte";
+<script >import { getContext, setContext } from "svelte";
 import { writable } from "svelte/store";
 export let name;
 export let slotProps = {};
