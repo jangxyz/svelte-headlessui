@@ -1,12 +1,12 @@
 <script lang="ts" context="module">
-  import DescriptionProvider from "$lib/components/description/DescriptionProvider.svelte";
-  import LabelProvider from "$lib/components/label/LabelProvider.svelte";
-  import { createEventDispatcher, getContext, setContext } from "svelte";
-  import type { Readable, Writable } from "svelte/store";
-  import { writable } from "svelte/store";
-  import { Focus, focusIn, FocusResult } from "$lib/utils/focus-management";
-  import { Keys } from "$lib/utils/keyboard";
-  import { useId } from "$lib/hooks/use-id";
+  import DescriptionProvider from '$lib/components/description/DescriptionProvider.svelte';
+  import LabelProvider from '$lib/components/label/LabelProvider.svelte';
+  import { createEventDispatcher, getContext, setContext } from 'svelte';
+  import type { Readable, Writable } from 'svelte/store';
+  import { writable } from 'svelte/store';
+  import { Focus, focusIn, FocusResult } from '$lib/utils/focus-management';
+  import { Keys } from '$lib/utils/keyboard';
+  import { useId } from '$lib/hooks/use-id';
   export interface Option {
     id: string;
     element: HTMLElement | null;
@@ -24,66 +24,59 @@
     // State mutators
     change(nextValue: unknown): boolean;
     registerOption(action: Option): void;
-    unregisterOption(id: Option["id"]): void;
+    unregisterOption(id: Option['id']): void;
   }
 
-  const RADIO_GROUP_CONTEXT_NAME = "headlessui-radio-group-context";
-  export function useRadioGroupContext(
-    component: string
-  ): Readable<StateDefinition> {
-    const context = getContext(RADIO_GROUP_CONTEXT_NAME) as
-      | Writable<StateDefinition>
-      | undefined;
+  const RADIO_GROUP_CONTEXT_NAME = 'headlessui-radio-group-context';
+  export function useRadioGroupContext(component: string): Readable<StateDefinition> {
+    const context = getContext(RADIO_GROUP_CONTEXT_NAME) as Writable<StateDefinition> | undefined;
 
     if (context === undefined) {
-      throw new Error(
-        `<${component} /> is missing a parent <RadioGroup /> component.`
-      );
+      throw new Error(`<${component} /> is missing a parent <RadioGroup /> component.`);
     }
 
     return context;
   }
 
-  type TRadioGroupProps<
-    TSlotProps extends {},
-    TAsProp extends SupportedAs
-  > = TPassThroughProps<TSlotProps, TAsProp, "div"> & {
+  type TRadioGroupProps<TSlotProps extends {}, TAsProp extends SupportedAs> = TPassThroughProps<
+    TSlotProps,
+    TAsProp,
+    'div'
+  > & {
     /** The currently selected value in the `RadioGroup` */
-    value: StateDefinition["value"];
+    value: StateDefinition['value'];
     /** Whether the `RadioGroup` and all of its `RadioGroupOption`s are disabled */
     disabled?: boolean;
   };
 </script>
 
 <script lang="ts">
-  import { treeWalker } from "$lib/hooks/use-tree-walker";
-  import { forwardEventsBuilder } from "$lib/internal/forwardEventsBuilder";
-  import { get_current_component } from "svelte/internal";
-  import type { SupportedAs } from "$lib/internal/elements";
-  import type { HTMLActionArray } from "$lib/hooks/use-actions";
-  import Render from "$lib/utils/Render.svelte";
-  import type { TPassThroughProps } from "$lib/types";
+  import { treeWalker } from '$lib/hooks/use-tree-walker';
+  import { forwardEventsBuilder } from '$lib/internal/forwardEventsBuilder';
+  import { get_current_component } from 'svelte/internal';
+  import type { SupportedAs } from '$lib/internal/elements';
+  import type { HTMLActionArray } from '$lib/hooks/use-actions';
+  import Render from '$lib/utils/Render.svelte';
+  import type { TPassThroughProps } from '$lib/types';
 
   /***** Props *****/
   type TAsProp = $$Generic<SupportedAs>;
   type $$Props = TRadioGroupProps<typeof slotProps, TAsProp>;
 
-  export let as: SupportedAs = "div";
+  export let as: SupportedAs = 'div';
   export let use: HTMLActionArray = [];
-  export let value: StateDefinition["value"];
+  export let value: StateDefinition['value'];
   export let disabled = false;
 
   /***** Events *****/
-  const forwardEvents = forwardEventsBuilder(get_current_component(), [
-    "change",
-  ]);
+  const forwardEvents = forwardEventsBuilder(get_current_component(), ['change']);
   const dispatch = createEventDispatcher<{
     change: any;
   }>();
 
   /***** Component *****/
   let radioGroupRef: HTMLElement | null = null;
-  let options: StateDefinition["options"] = [];
+  let options: StateDefinition['options'] = [];
 
   let id = `headlessui-radiogroup-${useId()}`;
 
@@ -92,17 +85,13 @@
     value,
     disabled,
     firstOption: options.find((option) => !option.propsRef.disabled),
-    containsCheckedOption: options.some(
-      (option) => option.propsRef.value === value
-    ),
+    containsCheckedOption: options.some((option) => option.propsRef.value === value),
     change(nextValue: unknown) {
       if (disabled) return false;
       if (value === nextValue) return false;
-      let nextOption = options.find(
-        (option) => option.propsRef.value === nextValue
-      )?.propsRef;
+      let nextOption = options.find((option) => option.propsRef.value === nextValue)?.propsRef;
       if (nextOption?.disabled) return false;
-      dispatch("change", nextValue);
+      dispatch('change', nextValue);
       return true;
     },
     registerOption(action: Option) {
@@ -111,11 +100,8 @@
         options = [...options, action];
         return;
       }
-      let orderMap = Array.from(
-        radioGroupRef.querySelectorAll('[id^="headlessui-radiogroup-option-"]')!
-      ).reduce(
-        (lookup, element, index) =>
-          Object.assign(lookup, { [element.id]: index }),
+      let orderMap = Array.from(radioGroupRef.querySelectorAll('[id^="headlessui-radiogroup-option-"]')!).reduce(
+        (lookup, element, index) => Object.assign(lookup, { [element.id]: index }),
         {}
       ) as Record<string, number>;
 
@@ -123,7 +109,7 @@
       newOptions.sort((a, z) => orderMap[a.id] - orderMap[z.id]);
       options = newOptions;
     },
-    unregisterOption(id: Option["id"]) {
+    unregisterOption(id: Option['id']) {
       options = options.filter((radio) => radio.id !== id);
     },
   });
@@ -136,22 +122,19 @@
       value,
       disabled,
       firstOption: options.find((option) => !option.propsRef.disabled),
-      containsCheckedOption: options.some(
-        (option) => option.propsRef.value === value
-      ),
+      containsCheckedOption: options.some((option) => option.propsRef.value === value),
     };
   });
 
   $: treeWalker({
     container: radioGroupRef,
     accept(node) {
-      if (node.getAttribute("role") === "radio")
-        return NodeFilter.FILTER_REJECT;
-      if (node.hasAttribute("role")) return NodeFilter.FILTER_SKIP;
+      if (node.getAttribute('role') === 'radio') return NodeFilter.FILTER_REJECT;
+      if (node.hasAttribute('role')) return NodeFilter.FILTER_SKIP;
       return NodeFilter.FILTER_ACCEPT;
     },
     walk(node) {
-      node.setAttribute("role", "none");
+      node.setAttribute('role', 'none');
     },
   });
 
@@ -174,9 +157,7 @@
           let result = focusIn(all, Focus.Previous | Focus.WrapAround);
 
           if (result === FocusResult.Success) {
-            let activeOption = options.find(
-              (option) => option.element === document.activeElement
-            );
+            let activeOption = options.find((option) => option.element === document.activeElement);
             if (activeOption) $api.change(activeOption.propsRef.value);
           }
         }
@@ -191,9 +172,7 @@
           let result = focusIn(all, Focus.Next | Focus.WrapAround);
 
           if (result === FocusResult.Success) {
-            let activeOption = options.find(
-              (option) => option.element === document.activeElement
-            );
+            let activeOption = options.find((option) => option.element === document.activeElement);
             if (activeOption) $api.change(activeOption.propsRef.value);
           }
         }
@@ -204,9 +183,7 @@
           event.preventDefault();
           event.stopPropagation();
 
-          let activeOption = options.find(
-            (option) => option.element === document.activeElement
-          );
+          let activeOption = options.find((option) => option.element === document.activeElement);
           if (activeOption) $api.change(activeOption.propsRef.value);
         }
         break;
@@ -215,10 +192,10 @@
 
   $: propsWeControl = {
     id,
-    role: "radiogroup",
+    role: 'radiogroup',
   };
 
-  $: slotProps = {};
+  $: slotProps = { api };
 </script>
 
 <DescriptionProvider name="RadioGroupDescription" let:describedby>
@@ -228,7 +205,7 @@
       {as}
       use={[...use, forwardEvents]}
       {slotProps}
-      name={"RadioGroup"}
+      name={'RadioGroup'}
       bind:el={radioGroupRef}
       aria-labelledby={labelledby}
       aria-describedby={describedby}
