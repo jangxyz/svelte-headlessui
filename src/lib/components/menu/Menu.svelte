@@ -1,19 +1,16 @@
 <script lang="ts" context="module">
-  import {
-    Focus,
-    calculateActiveIndex,
-  } from "$lib/utils/calculate-active-index";
-  import { getContext, setContext } from "svelte";
-  import type { Readable, Writable } from "svelte/store";
-  import { writable } from "svelte/store";
-  import { State, useOpenClosedProvider } from "$lib/internal/open-closed";
-  import { match } from "$lib/utils/match";
-  import type { HTMLActionArray } from "$lib/hooks/use-actions";
-  import type { SupportedAs } from "$lib/internal/elements";
-  import { forwardEventsBuilder } from "$lib/internal/forwardEventsBuilder";
-  import { get_current_component } from "svelte/internal";
-  import Render from "$lib/utils/Render.svelte";
-  import type { TPassThroughProps } from "$lib/types";
+  import { Focus, calculateActiveIndex } from '$lib/utils/calculate-active-index';
+  import { getContext, setContext } from 'svelte';
+  import type { Readable, Writable } from 'svelte/store';
+  import { writable } from 'svelte/store';
+  import { State, useOpenClosedProvider } from '$lib/internal/open-closed';
+  import { match } from '$lib/utils/match';
+  import type { HTMLActionArray } from '$lib/hooks/use-actions';
+  import type { SupportedAs } from '$lib/internal/elements';
+  import { forwardEventsBuilder } from '$lib/internal/forwardEventsBuilder';
+  import { get_current_component } from 'svelte/internal';
+  import Render from '$lib/utils/Render.svelte';
+  import type { TPassThroughProps } from '$lib/types';
 
   export enum MenuStates {
     Open,
@@ -39,26 +36,22 @@
     unregisterItem(id: string): void;
   };
 
-  const MENU_CONTEXT_NAME = "headlessui-menu-context";
+  const MENU_CONTEXT_NAME = 'headlessui-menu-context';
 
-  export function useMenuContext(
-    componentName: string
-  ): Readable<StateDefinition> {
-    let context: Writable<StateDefinition> | undefined =
-      getContext(MENU_CONTEXT_NAME);
+  export function useMenuContext(componentName: string): Readable<StateDefinition> {
+    let context: Writable<StateDefinition> | undefined = getContext(MENU_CONTEXT_NAME);
 
     if (context === undefined) {
-      throw new Error(
-        `<${componentName} /> is missing a parent <Menu /> component.`
-      );
+      throw new Error(`<${componentName} /> is missing a parent <Menu /> component.`);
     }
     return context;
   }
 
-  type TMenuProps<
-    TSlotProps extends {},
-    TAsProp extends SupportedAs
-  > = TPassThroughProps<TSlotProps, TAsProp, "div"> & {};
+  type TMenuProps<TSlotProps extends {}, TAsProp extends SupportedAs> = TPassThroughProps<
+    TSlotProps,
+    TAsProp,
+    'div'
+  > & {};
 </script>
 
 <script lang="ts">
@@ -67,18 +60,18 @@
   type $$Props = TMenuProps<typeof slotProps, TAsProp>;
 
   export let use: HTMLActionArray = [];
-  export let as: SupportedAs = "div";
+  export let as: SupportedAs = 'div';
 
   /***** Events *****/
   const forwardEvents = forwardEventsBuilder(get_current_component());
 
   /***** Component *****/
-  let menuState: StateDefinition["menuState"] = MenuStates.Closed;
-  let buttonStore: StateDefinition["buttonStore"] = writable(null);
-  let itemsStore: StateDefinition["itemsStore"] = writable(null);
-  let items: StateDefinition["items"] = [];
-  let searchQuery: StateDefinition["searchQuery"] = "";
-  let activeItemIndex: StateDefinition["activeItemIndex"] = null;
+  let menuState: StateDefinition['menuState'] = MenuStates.Closed;
+  let buttonStore: StateDefinition['buttonStore'] = writable(null);
+  let itemsStore: StateDefinition['itemsStore'] = writable(null);
+  let items: StateDefinition['items'] = [];
+  let searchQuery: StateDefinition['searchQuery'] = '';
+  let activeItemIndex: StateDefinition['activeItemIndex'] = null;
 
   let api = writable<StateDefinition>({
     menuState,
@@ -105,23 +98,18 @@
         }
       );
 
-      if (searchQuery === "" && activeItemIndex === nextActiveItemIndex) return;
-      searchQuery = "";
+      if (searchQuery === '' && activeItemIndex === nextActiveItemIndex) return;
+      searchQuery = '';
       activeItemIndex = nextActiveItemIndex;
     },
     search(value: string) {
       searchQuery += value.toLowerCase();
 
       let reorderedItems =
-        activeItemIndex !== null
-          ? items
-              .slice(activeItemIndex + 1)
-              .concat(items.slice(0, activeItemIndex + 1))
-          : items;
+        activeItemIndex !== null ? items.slice(activeItemIndex + 1).concat(items.slice(0, activeItemIndex + 1)) : items;
 
       let matchingItem = reorderedItems.find(
-        (item) =>
-          item.data.textValue.startsWith(searchQuery) && !item.data.disabled
+        (item) => item.data.textValue.startsWith(searchQuery) && !item.data.disabled
       );
 
       let matchIdx = matchingItem ? items.indexOf(matchingItem) : -1;
@@ -130,7 +118,7 @@
       activeItemIndex = matchIdx;
     },
     clearSearch() {
-      searchQuery = "";
+      searchQuery = '';
     },
     registerItem(id: string, data: MenuItemData) {
       if (!$itemsStore) {
@@ -138,14 +126,10 @@
         items = [...items, { id, data }];
         return;
       }
-      let currentActiveItem =
-        activeItemIndex !== null ? items[activeItemIndex] : null;
+      let currentActiveItem = activeItemIndex !== null ? items[activeItemIndex] : null;
 
-      let orderMap = Array.from(
-        $itemsStore.querySelectorAll('[id^="headlessui-menu-item-"]')!
-      ).reduce(
-        (lookup, element, index) =>
-          Object.assign(lookup, { [element.id]: index }),
+      let orderMap = Array.from($itemsStore.querySelectorAll('[id^="headlessui-menu-item-"]')!).reduce(
+        (lookup, element, index) => Object.assign(lookup, { [element.id]: index }),
         {}
       ) as Record<string, number>;
 
@@ -161,8 +145,7 @@
     },
     unregisterItem(id: string) {
       let nextItems = items.slice();
-      let currentActiveItem =
-        activeItemIndex !== null ? nextItems[activeItemIndex] : null;
+      let currentActiveItem = activeItemIndex !== null ? nextItems[activeItemIndex] : null;
       let idx = nextItems.findIndex((a) => a.id === id);
       if (idx !== -1) nextItems.splice(idx, 1);
       items = nextItems;
@@ -210,16 +193,10 @@
     [MenuStates.Closed]: State.Closed,
   });
 
-  $: slotProps = { open: menuState === MenuStates.Open };
+  $: slotProps = { open: menuState === MenuStates.Open, api };
 </script>
 
 <svelte:window on:mousedown={handleWindowMousedown} />
-<Render
-  {...$$restProps}
-  use={[...use, forwardEvents]}
-  {as}
-  {slotProps}
-  name={"Menu"}
->
+<Render {...$$restProps} use={[...use, forwardEvents]} {as} {slotProps} name={'Menu'}>
   <slot {...slotProps} />
 </Render>

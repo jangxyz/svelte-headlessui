@@ -1,12 +1,5 @@
 <script lang="ts" context="module">
-  import {
-    getContext,
-    setContext,
-    createEventDispatcher,
-    tick,
-    onDestroy,
-    onMount,
-  } from "svelte";
+  import { getContext, setContext, createEventDispatcher, tick, onDestroy, onMount } from 'svelte';
   export enum DialogStates {
     Open,
     Closed,
@@ -22,26 +15,21 @@
     close(): void;
   }
 
-  const DIALOG_CONTEXT_NAME = "headlessui-dialog-context";
+  const DIALOG_CONTEXT_NAME = 'headlessui-dialog-context';
 
-  export function useDialogContext(
-    component: string
-  ): Readable<StateDefinition> {
-    let context = getContext(DIALOG_CONTEXT_NAME) as
-      | Writable<StateDefinition>
-      | undefined;
+  export function useDialogContext(component: string): Readable<StateDefinition> {
+    let context = getContext(DIALOG_CONTEXT_NAME) as Writable<StateDefinition> | undefined;
     if (context === undefined) {
-      throw new Error(
-        `<${component} /> is missing a parent <Dialog /> component.`
-      );
+      throw new Error(`<${component} /> is missing a parent <Dialog /> component.`);
     }
     return context;
   }
 
-  type TDialogProps<
-    TSlotProps extends {},
-    TAsProp extends SupportedAs
-  > = TPassThroughProps<TSlotProps, TAsProp, "div"> & {
+  type TDialogProps<TSlotProps extends {}, TAsProp extends SupportedAs> = TPassThroughProps<
+    TSlotProps,
+    TAsProp,
+    'div'
+  > & {
     /** Whether the `Dialog` is open */
     open?: boolean;
     /** The element that should receive focus when the Dialog is first opened */
@@ -54,42 +42,38 @@
 </script>
 
 <script lang="ts">
-  import { State, useOpenClosed } from "$lib/internal/open-closed";
-  import type { Readable, Writable } from "svelte/store";
-  import { writable } from "svelte/store";
-  import { match } from "$lib/utils/match";
-  import { useId } from "$lib/hooks/use-id";
-  import { useInertOthers } from "$lib/hooks/use-inert-others";
-  import { contains } from "$lib/internal/dom-containers";
-  import { Keys } from "$lib/utils/keyboard";
-  import FocusTrap from "$lib/components/focus-trap/FocusTrap.svelte";
-  import StackContextProvider, {
-    StackMessage,
-  } from "$lib/internal/StackContextProvider.svelte";
-  import DescriptionProvider from "$lib/components/description/DescriptionProvider.svelte";
-  import ForcePortalRootContext from "$lib/internal/ForcePortalRootContext.svelte";
-  import Portal from "$lib/components/portal/Portal.svelte";
-  import PortalGroup from "$lib/components/portal/PortalGroup.svelte";
-  import { forwardEventsBuilder } from "$lib/internal/forwardEventsBuilder";
-  import { get_current_component } from "svelte/internal";
-  import type { SupportedAs } from "$lib/internal/elements";
-  import type { HTMLActionArray } from "$lib/hooks/use-actions";
-  import Render from "$lib/utils/Render.svelte";
-  import { Features, type TPassThroughProps } from "$lib/types";
+  import { State, useOpenClosed } from '$lib/internal/open-closed';
+  import type { Readable, Writable } from 'svelte/store';
+  import { writable } from 'svelte/store';
+  import { match } from '$lib/utils/match';
+  import { useId } from '$lib/hooks/use-id';
+  import { useInertOthers } from '$lib/hooks/use-inert-others';
+  import { contains } from '$lib/internal/dom-containers';
+  import { Keys } from '$lib/utils/keyboard';
+  import FocusTrap from '$lib/components/focus-trap/FocusTrap.svelte';
+  import StackContextProvider, { StackMessage } from '$lib/internal/StackContextProvider.svelte';
+  import DescriptionProvider from '$lib/components/description/DescriptionProvider.svelte';
+  import ForcePortalRootContext from '$lib/internal/ForcePortalRootContext.svelte';
+  import Portal from '$lib/components/portal/Portal.svelte';
+  import PortalGroup from '$lib/components/portal/PortalGroup.svelte';
+  import { forwardEventsBuilder } from '$lib/internal/forwardEventsBuilder';
+  import { get_current_component } from 'svelte/internal';
+  import type { SupportedAs } from '$lib/internal/elements';
+  import type { HTMLActionArray } from '$lib/hooks/use-actions';
+  import Render from '$lib/utils/Render.svelte';
+  import { Features, type TPassThroughProps } from '$lib/types';
 
   /***** Props *****/
   type TAsProp = $$Generic<SupportedAs>;
   type $$Props = TDialogProps<typeof slotProps, TAsProp>;
 
-  export let as: SupportedAs = "div";
+  export let as: SupportedAs = 'div';
   export let use: HTMLActionArray = [];
   export let open: boolean | undefined = undefined;
   export let initialFocus: HTMLElement | null = null;
 
   /***** Events *****/
-  const forwardEvents = forwardEventsBuilder(get_current_component(), [
-    "close",
-  ]);
+  const forwardEvents = forwardEventsBuilder(get_current_component(), ['close']);
   const dispatch = createEventDispatcher<{
     close: boolean;
   }>();
@@ -111,12 +95,10 @@
     let hasOpen = open !== undefined || openClosedState !== undefined;
 
     if (!hasOpen) {
-      throw new Error(
-        `You forgot to provide an \`open\` prop to the \`Dialog\` component.`
-      );
+      throw new Error(`You forgot to provide an \`open\` prop to the \`Dialog\` component.`);
     }
 
-    if (typeof open !== "boolean") {
+    if (typeof open !== 'boolean') {
       throw new Error(
         `You provided an \`open\` prop to the \`Dialog\`, but the value is not a boolean. Received: ${open}`
       );
@@ -124,10 +106,7 @@
   }
 
   $: dialogState = open ? DialogStates.Open : DialogStates.Closed;
-  $: visible =
-    openClosedState !== undefined
-      ? $openClosedState === State.Open
-      : dialogState === DialogStates.Open;
+  $: visible = openClosedState !== undefined ? $openClosedState === State.Open : dialogState === DialogStates.Open;
 
   let internalDialogRef: HTMLDivElement | null = null;
   $: enabled = dialogState === DialogStates.Open;
@@ -147,7 +126,7 @@
     }
   });
 
-  let titleId: StateDefinition["titleId"];
+  let titleId: StateDefinition['titleId'];
 
   let api = writable<StateDefinition>({
     titleId,
@@ -157,7 +136,7 @@
       titleId = id;
     },
     close() {
-      dispatch("close", false);
+      dispatch('close', false);
     },
   });
   setContext(DIALOG_CONTEXT_NAME, api);
@@ -204,10 +183,9 @@
     let overflow = document.documentElement.style.overflow;
     let paddingRight = document.documentElement.style.paddingRight;
 
-    let scrollbarWidth =
-      window.innerWidth - document.documentElement.clientWidth;
+    let scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
 
-    document.documentElement.style.overflow = "hidden";
+    document.documentElement.style.overflow = 'hidden';
     document.documentElement.style.paddingRight = `${scrollbarWidth}px`;
 
     return () => {
@@ -259,18 +237,15 @@
 
   $: propsWeControl = {
     id,
-    role: "dialog",
-    "aria-modal": dialogState === DialogStates.Open ? true : undefined,
-    "aria-labelledby": titleId,
+    role: 'dialog',
+    'aria-modal': dialogState === DialogStates.Open ? true : undefined,
+    'aria-labelledby': titleId,
   };
 
-  $: slotProps = { open };
+  $: slotProps = { open, api };
 </script>
 
-<svelte:window
-  on:mousedown={handleWindowMousedown}
-  on:keydown={handleWindowKeydown}
-/>
+<svelte:window on:mousedown={handleWindowMousedown} on:keydown={handleWindowKeydown} />
 <FocusTrap {containers} {enabled} options={{ initialFocus }} />
 <StackContextProvider
   element={internalDialogRef}
@@ -290,17 +265,13 @@
     <Portal>
       <PortalGroup target={internalDialogRef}>
         <ForcePortalRootContext force={false}>
-          <DescriptionProvider
-            name={"DialogDescription"}
-            {slotProps}
-            let:describedby
-          >
+          <DescriptionProvider name={'DialogDescription'} {slotProps} let:describedby>
             <Render
               {...{ ...$$restProps, ...propsWeControl }}
               {as}
               {slotProps}
               use={[...use, forwardEvents]}
-              name={"Dialog"}
+              name={'Dialog'}
               bind:el={internalDialogRef}
               aria-describedby={describedby}
               on:click={handleClick}

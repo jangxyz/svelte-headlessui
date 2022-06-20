@@ -25,50 +25,42 @@
     close(): void;
   }
 
-  const POPOVER_CONTEXT_NAME = "headlessui-popover-context";
-  export function usePopoverContext(
-    component: string
-  ): Readable<StateDefinition> {
-    let context = getContext(POPOVER_CONTEXT_NAME) as
-      | Writable<StateDefinition>
-      | undefined;
+  const POPOVER_CONTEXT_NAME = 'headlessui-popover-context';
+  export function usePopoverContext(component: string): Readable<StateDefinition> {
+    let context = getContext(POPOVER_CONTEXT_NAME) as Writable<StateDefinition> | undefined;
     if (context === undefined) {
-      throw new Error(
-        `<${component} /> is missing a parent <Popover /> component.`
-      );
+      throw new Error(`<${component} /> is missing a parent <Popover /> component.`);
     }
     return context;
   }
-  type TPopoverProps<
-    TSlotProps extends {},
-    TAsProp extends SupportedAs
-  > = TPassThroughProps<TSlotProps, TAsProp, "div"> & {};
+  type TPopoverProps<TSlotProps extends {}, TAsProp extends SupportedAs> = TPassThroughProps<
+    TSlotProps,
+    TAsProp,
+    'div'
+  > & {};
 </script>
 
 <script lang="ts">
-  import { match } from "$lib/utils/match";
-  import { useId } from "$lib/hooks/use-id";
-  import {
-    isFocusableElement,
-    FocusableMode,
-  } from "$lib/utils/focus-management";
-  import { State, useOpenClosedProvider } from "$lib/internal/open-closed";
-  import { usePopoverGroupContext } from "./PopoverGroup.svelte";
-  import { getContext, setContext, onMount } from "svelte";
-  import type { Readable, Writable } from "svelte/store";
-  import { writable } from "svelte/store";
-  import { forwardEventsBuilder } from "$lib/internal/forwardEventsBuilder";
-  import { get_current_component } from "svelte/internal";
-  import type { SupportedAs } from "$lib/internal/elements";
-  import type { HTMLActionArray } from "$lib/hooks/use-actions";
-  import Render from "$lib/utils/Render.svelte";
-  import type { TPassThroughProps } from "$lib/types";
+  import { match } from '$lib/utils/match';
+  import { useId } from '$lib/hooks/use-id';
+  import { isFocusableElement, FocusableMode } from '$lib/utils/focus-management';
+  import { State, useOpenClosedProvider } from '$lib/internal/open-closed';
+  import { usePopoverGroupContext } from './PopoverGroup.svelte';
+  import { getContext, setContext, onMount } from 'svelte';
+  import type { Readable, Writable } from 'svelte/store';
+  import { writable } from 'svelte/store';
+  import { forwardEventsBuilder } from '$lib/internal/forwardEventsBuilder';
+  import { get_current_component } from 'svelte/internal';
+  import type { SupportedAs } from '$lib/internal/elements';
+  import type { HTMLActionArray } from '$lib/hooks/use-actions';
+  import Render from '$lib/utils/Render.svelte';
+  import type { TPassThroughProps } from '$lib/types';
 
   /***** Props *****/
   type TAsProp = $$Generic<SupportedAs>;
   type $$Props = TPopoverProps<typeof slotProps, TAsProp>;
 
-  export let as: SupportedAs = "div";
+  export let as: SupportedAs = 'div';
   export let use: HTMLActionArray = [];
 
   /***** Events *****/
@@ -77,9 +69,9 @@
   /***** Component *****/
   const buttonId = `headlessui-popover-button-${useId()}`;
   const panelId = `headlessui-popover-panel-${useId()}`;
-  let popoverState: StateDefinition["popoverState"] = PopoverStates.Closed;
-  let panel: StateDefinition["panel"] = writable(null);
-  let button: StateDefinition["button"] = writable(null);
+  let popoverState: StateDefinition['popoverState'] = PopoverStates.Closed;
+  let panel: StateDefinition['panel'] = writable(null);
+  let button: StateDefinition['button'] = writable(null);
 
   let api = writable<StateDefinition>({
     popoverState,
@@ -141,8 +133,7 @@
   function isFocusWithinPopoverGroup() {
     return (
       groupContext?.isFocusWithinPopoverGroup() ??
-      ($button?.contains(document.activeElement) ||
-        $panel?.contains(document.activeElement))
+      ($button?.contains(document.activeElement) || $panel?.contains(document.activeElement))
     );
   }
 
@@ -182,16 +173,11 @@
   $: slotProps = {
     open: popoverState === PopoverStates.Open,
     close: $api.close,
+    api,
   };
 </script>
 
 <svelte:window on:focus|capture={handleFocus} on:mousedown={handleMousedown} />
-<Render
-  {...$$restProps}
-  {as}
-  {slotProps}
-  use={[...use, forwardEvents]}
-  name={"Popover"}
->
+<Render {...$$restProps} {as} {slotProps} use={[...use, forwardEvents]} name={'Popover'}>
   <slot {...slotProps} />
 </Render>
