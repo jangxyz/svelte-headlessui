@@ -10,11 +10,12 @@ export interface StateDefinition {
     close(): void;
 }
 export declare function useDialogContext(component: string): Readable<StateDefinition>;
-import type { Readable } from "svelte/store";
-import type { SupportedAs } from "../../internal/elements";
+import type { Readable, Writable } from 'svelte/store';
+import type { SupportedAs } from '../../internal/elements';
 declare class __sveltets_Render<TAsProp extends SupportedAs> {
     props(): Omit<import("../../types").TRenderProps<{
         open: boolean | undefined;
+        api: Writable<StateDefinition>;
     }, TAsProp, "div">, import("../../types").TInternalProps | "as" | "static" | "unmount"> & {
         as?: TAsProp | undefined;
     } & {
@@ -33,6 +34,7 @@ declare class __sveltets_Render<TAsProp extends SupportedAs> {
     slots(): {
         default: {
             open: boolean | undefined;
+            api: Writable<StateDefinition>;
         };
     };
 }

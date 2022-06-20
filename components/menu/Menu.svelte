@@ -1,17 +1,17 @@
-<script  context="module">import { Focus, calculateActiveIndex, } from "../../utils/calculate-active-index";
-import { getContext, setContext } from "svelte";
-import { writable } from "svelte/store";
-import { State, useOpenClosedProvider } from "../../internal/open-closed";
-import { match } from "../../utils/match";
-import { forwardEventsBuilder } from "../../internal/forwardEventsBuilder";
-import { get_current_component } from "svelte/internal";
-import Render from "../../utils/Render.svelte";
+<script  context="module">import { Focus, calculateActiveIndex } from '../../utils/calculate-active-index';
+import { getContext, setContext } from 'svelte';
+import { writable } from 'svelte/store';
+import { State, useOpenClosedProvider } from '../../internal/open-closed';
+import { match } from '../../utils/match';
+import { forwardEventsBuilder } from '../../internal/forwardEventsBuilder';
+import { get_current_component } from 'svelte/internal';
+import Render from '../../utils/Render.svelte';
 export var MenuStates;
 (function (MenuStates) {
     MenuStates[MenuStates["Open"] = 0] = "Open";
     MenuStates[MenuStates["Closed"] = 1] = "Closed";
 })(MenuStates || (MenuStates = {}));
-const MENU_CONTEXT_NAME = "headlessui-menu-context";
+const MENU_CONTEXT_NAME = 'headlessui-menu-context';
 export function useMenuContext(componentName) {
     let context = getContext(MENU_CONTEXT_NAME);
     if (context === undefined) {
@@ -22,7 +22,7 @@ export function useMenuContext(componentName) {
 </script>
 
 <script >export let use = [];
-export let as = "div";
+export let as = 'div';
 /***** Events *****/
 const forwardEvents = forwardEventsBuilder(get_current_component());
 /***** Component *****/
@@ -30,7 +30,7 @@ let menuState = MenuStates.Closed;
 let buttonStore = writable(null);
 let itemsStore = writable(null);
 let items = [];
-let searchQuery = "";
+let searchQuery = '';
 let activeItemIndex = null;
 let api = writable({
     menuState,
@@ -53,18 +53,14 @@ let api = writable({
             resolveId: (item) => item.id,
             resolveDisabled: (item) => item.data.disabled,
         });
-        if (searchQuery === "" && activeItemIndex === nextActiveItemIndex)
+        if (searchQuery === '' && activeItemIndex === nextActiveItemIndex)
             return;
-        searchQuery = "";
+        searchQuery = '';
         activeItemIndex = nextActiveItemIndex;
     },
     search(value) {
         searchQuery += value.toLowerCase();
-        let reorderedItems = activeItemIndex !== null
-            ? items
-                .slice(activeItemIndex + 1)
-                .concat(items.slice(0, activeItemIndex + 1))
-            : items;
+        let reorderedItems = activeItemIndex !== null ? items.slice(activeItemIndex + 1).concat(items.slice(0, activeItemIndex + 1)) : items;
         let matchingItem = reorderedItems.find((item) => item.data.textValue.startsWith(searchQuery) && !item.data.disabled);
         let matchIdx = matchingItem ? items.indexOf(matchingItem) : -1;
         if (matchIdx === -1 || matchIdx === activeItemIndex)
@@ -72,7 +68,7 @@ let api = writable({
         activeItemIndex = matchIdx;
     },
     clearSearch() {
-        searchQuery = "";
+        searchQuery = '';
     },
     registerItem(id, data) {
         if (!$itemsStore) {
@@ -142,16 +138,10 @@ $: $openClosedState = match(menuState, {
     [MenuStates.Open]: State.Open,
     [MenuStates.Closed]: State.Closed,
 });
-$: slotProps = { open: menuState === MenuStates.Open };
+$: slotProps = { open: menuState === MenuStates.Open, api };
 </script>
 
 <svelte:window on:mousedown={handleWindowMousedown} />
-<Render
-  {...$$restProps}
-  use={[...use, forwardEvents]}
-  {as}
-  {slotProps}
-  name={"Menu"}
->
+<Render {...$$restProps} use={[...use, forwardEvents]} {as} {slotProps} name={'Menu'}>
   <slot {...slotProps} />
 </Render>

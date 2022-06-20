@@ -1,11 +1,11 @@
-<script  context="module">import { writable } from "svelte/store";
-import { getContext, setContext } from "svelte";
+<script  context="module">import { writable } from 'svelte/store';
+import { getContext, setContext } from 'svelte';
 export var DisclosureStates;
 (function (DisclosureStates) {
     DisclosureStates[DisclosureStates["Open"] = 0] = "Open";
     DisclosureStates[DisclosureStates["Closed"] = 1] = "Closed";
 })(DisclosureStates || (DisclosureStates = {}));
-let DISCLOSURE_CONTEXT_NAME = "headlessui-disclosure-context";
+let DISCLOSURE_CONTEXT_NAME = 'headlessui-disclosure-context';
 export function useDisclosureContext(component) {
     let context = getContext(DISCLOSURE_CONTEXT_NAME);
     if (context === undefined) {
@@ -15,13 +15,13 @@ export function useDisclosureContext(component) {
 }
 </script>
 
-<script >import { useId } from "../../hooks/use-id";
-import { match } from "../../utils/match";
-import { State, useOpenClosedProvider } from "../../internal/open-closed";
-import { forwardEventsBuilder } from "../../internal/forwardEventsBuilder";
-import { get_current_component } from "svelte/internal";
-import Render from "../../utils/Render.svelte";
-export let as = "div";
+<script >import { useId } from '../../hooks/use-id';
+import { match } from '../../utils/match';
+import { State, useOpenClosedProvider } from '../../internal/open-closed';
+import { forwardEventsBuilder } from '../../internal/forwardEventsBuilder';
+import { get_current_component } from 'svelte/internal';
+import Render from '../../utils/Render.svelte';
+export let as = 'div';
 export let use = [];
 export let defaultOpen = false;
 /***** Events *****/
@@ -82,15 +82,10 @@ $: $openClosedState = computeOpenClosedState(disclosureState);
 $: slotProps = {
     open: disclosureState === DisclosureStates.Open,
     close: $api.close,
+    api,
 };
 </script>
 
-<Render
-  {...$$restProps}
-  {as}
-  {slotProps}
-  use={[...use, forwardEvents]}
-  name={"Disclosure"}
->
+<Render {...$$restProps} {as} {slotProps} use={[...use, forwardEvents]} name={'Disclosure'}>
   <slot {...slotProps} />
 </Render>

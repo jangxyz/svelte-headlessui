@@ -3,7 +3,7 @@
     ListboxStates[ListboxStates["Open"] = 0] = "Open";
     ListboxStates[ListboxStates["Closed"] = 1] = "Closed";
 })(ListboxStates || (ListboxStates = {}));
-const LISTBOX_CONTEXT_NAME = "headlessui-listbox-context";
+const LISTBOX_CONTEXT_NAME = 'headlessui-listbox-context';
 export function useListboxContext(component) {
     let context = getContext(LISTBOX_CONTEXT_NAME);
     if (context === undefined) {
@@ -13,32 +13,30 @@ export function useListboxContext(component) {
 }
 </script>
 
-<script >import { Focus, calculateActiveIndex, } from "../../utils/calculate-active-index";
-import { createEventDispatcher, getContext, setContext } from "svelte";
-import { writable } from "svelte/store";
-import { match } from "../../utils/match";
-import { State, useOpenClosedProvider } from "../../internal/open-closed";
-import { forwardEventsBuilder } from "../../internal/forwardEventsBuilder";
-import { get_current_component } from "svelte/internal";
-import Render from "../../utils/Render.svelte";
-export let as = "div";
+<script >import { Focus, calculateActiveIndex } from '../../utils/calculate-active-index';
+import { createEventDispatcher, getContext, setContext } from 'svelte';
+import { writable } from 'svelte/store';
+import { match } from '../../utils/match';
+import { State, useOpenClosedProvider } from '../../internal/open-closed';
+import { forwardEventsBuilder } from '../../internal/forwardEventsBuilder';
+import { get_current_component } from 'svelte/internal';
+import Render from '../../utils/Render.svelte';
+export let as = 'div';
 export let use = [];
 export let disabled = false;
 export let horizontal = false;
 export let value;
 /***** Events *****/
-const forwardEvents = forwardEventsBuilder(get_current_component(), [
-    "change",
-]);
+const forwardEvents = forwardEventsBuilder(get_current_component(), ['change']);
 const dispatch = createEventDispatcher();
 /***** Component *****/
-$: orientation = (horizontal ? "horizontal" : "vertical");
+$: orientation = (horizontal ? 'horizontal' : 'vertical');
 let listboxState = ListboxStates.Closed;
 let labelRef = writable(null);
 let buttonRef = writable(null);
 let optionsRef = writable(null);
 let options = [];
-let searchQuery = "";
+let searchQuery = '';
 let activeOptionIndex = null;
 let api = writable({
     listboxState,
@@ -79,10 +77,10 @@ let api = writable({
             resolveId: (option) => option.id,
             resolveDisabled: (option) => option.dataRef.disabled,
         });
-        if (searchQuery === "" && activeOptionIndex === nextActiveOptionIndex)
+        if (searchQuery === '' && activeOptionIndex === nextActiveOptionIndex)
             return;
         activeOptionIndex = nextActiveOptionIndex;
-        searchQuery = "";
+        searchQuery = '';
     },
     search(value) {
         if (disabled)
@@ -91,12 +89,9 @@ let api = writable({
             return;
         searchQuery += value.toLowerCase();
         let reorderedOptions = activeOptionIndex !== null
-            ? options
-                .slice(activeOptionIndex + 1)
-                .concat(options.slice(0, activeOptionIndex + 1))
+            ? options.slice(activeOptionIndex + 1).concat(options.slice(0, activeOptionIndex + 1))
             : options;
-        let matchingOption = reorderedOptions.find((option) => !option.dataRef.disabled &&
-            option.dataRef.textValue.startsWith(searchQuery));
+        let matchingOption = reorderedOptions.find((option) => !option.dataRef.disabled && option.dataRef.textValue.startsWith(searchQuery));
         let matchIdx = matchingOption ? options.indexOf(matchingOption) : -1;
         if (matchIdx === -1 || matchIdx === activeOptionIndex)
             return;
@@ -107,9 +102,9 @@ let api = writable({
             return;
         if (listboxState === ListboxStates.Closed)
             return;
-        if (searchQuery === "")
+        if (searchQuery === '')
             return;
-        searchQuery = "";
+        searchQuery = '';
     },
     registerOption(id, dataRef) {
         if (!$optionsRef) {
@@ -149,7 +144,7 @@ let api = writable({
     select(value) {
         if (disabled)
             return;
-        dispatch("change", value);
+        dispatch('change', value);
     },
 });
 setContext(LISTBOX_CONTEXT_NAME, api);
@@ -186,16 +181,10 @@ function handleMousedown(event) {
         $buttonRef?.focus({ preventScroll: true });
     }
 }
-$: slotProps = { open: listboxState === ListboxStates.Open };
+$: slotProps = { open: listboxState === ListboxStates.Open, api };
 </script>
 
 <svelte:window on:mousedown={handleMousedown} />
-<Render
-  {...$$restProps}
-  {as}
-  {slotProps}
-  use={[...use, forwardEvents]}
-  name={"Listbox"}
->
+<Render {...$$restProps} {as} {slotProps} use={[...use, forwardEvents]} name={'Listbox'}>
   <slot {...slotProps} />
 </Render>

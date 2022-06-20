@@ -1,11 +1,11 @@
-<script  context="module">import DescriptionProvider from "../description/DescriptionProvider.svelte";
-import LabelProvider from "../label/LabelProvider.svelte";
-import { createEventDispatcher, getContext, setContext } from "svelte";
-import { writable } from "svelte/store";
-import { Focus, focusIn, FocusResult } from "../../utils/focus-management";
-import { Keys } from "../../utils/keyboard";
-import { useId } from "../../hooks/use-id";
-const RADIO_GROUP_CONTEXT_NAME = "headlessui-radio-group-context";
+<script  context="module">import DescriptionProvider from '../description/DescriptionProvider.svelte';
+import LabelProvider from '../label/LabelProvider.svelte';
+import { createEventDispatcher, getContext, setContext } from 'svelte';
+import { writable } from 'svelte/store';
+import { Focus, focusIn, FocusResult } from '../../utils/focus-management';
+import { Keys } from '../../utils/keyboard';
+import { useId } from '../../hooks/use-id';
+const RADIO_GROUP_CONTEXT_NAME = 'headlessui-radio-group-context';
 export function useRadioGroupContext(component) {
     const context = getContext(RADIO_GROUP_CONTEXT_NAME);
     if (context === undefined) {
@@ -15,18 +15,16 @@ export function useRadioGroupContext(component) {
 }
 </script>
 
-<script >import { treeWalker } from "../../hooks/use-tree-walker";
-import { forwardEventsBuilder } from "../../internal/forwardEventsBuilder";
-import { get_current_component } from "svelte/internal";
-import Render from "../../utils/Render.svelte";
-export let as = "div";
+<script >import { treeWalker } from '../../hooks/use-tree-walker';
+import { forwardEventsBuilder } from '../../internal/forwardEventsBuilder';
+import { get_current_component } from 'svelte/internal';
+import Render from '../../utils/Render.svelte';
+export let as = 'div';
 export let use = [];
 export let value;
 export let disabled = false;
 /***** Events *****/
-const forwardEvents = forwardEventsBuilder(get_current_component(), [
-    "change",
-]);
+const forwardEvents = forwardEventsBuilder(get_current_component(), ['change']);
 const dispatch = createEventDispatcher();
 /***** Component *****/
 let radioGroupRef = null;
@@ -46,7 +44,7 @@ let api = writable({
         let nextOption = options.find((option) => option.propsRef.value === nextValue)?.propsRef;
         if (nextOption?.disabled)
             return false;
-        dispatch("change", nextValue);
+        dispatch('change', nextValue);
         return true;
     },
     registerOption(action) {
@@ -78,14 +76,14 @@ $: api.update((obj) => {
 $: treeWalker({
     container: radioGroupRef,
     accept(node) {
-        if (node.getAttribute("role") === "radio")
+        if (node.getAttribute('role') === 'radio')
             return NodeFilter.FILTER_REJECT;
-        if (node.hasAttribute("role"))
+        if (node.hasAttribute('role'))
             return NodeFilter.FILTER_SKIP;
         return NodeFilter.FILTER_ACCEPT;
     },
     walk(node) {
-        node.setAttribute("role", "none");
+        node.setAttribute('role', 'none');
     },
 });
 function handleKeyDown(e) {
@@ -137,9 +135,9 @@ function handleKeyDown(e) {
 }
 $: propsWeControl = {
     id,
-    role: "radiogroup",
+    role: 'radiogroup',
 };
-$: slotProps = {};
+$: slotProps = { api };
 </script>
 
 <DescriptionProvider name="RadioGroupDescription" let:describedby>
@@ -149,7 +147,7 @@ $: slotProps = {};
       {as}
       use={[...use, forwardEvents]}
       {slotProps}
-      name={"RadioGroup"}
+      name={'RadioGroup'}
       bind:el={radioGroupRef}
       aria-labelledby={labelledby}
       aria-describedby={describedby}

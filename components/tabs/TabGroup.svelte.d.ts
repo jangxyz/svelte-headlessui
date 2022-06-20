@@ -5,8 +5,8 @@ interface PanelData {
 }
 export declare type StateDefinition = {
     selectedIndex: number | null;
-    orientation: "vertical" | "horizontal";
-    activation: "auto" | "manual";
+    orientation: 'vertical' | 'horizontal';
+    activation: 'auto' | 'manual';
     tabs: HTMLElement[];
     panels: PanelData[];
     listRef: Writable<HTMLElement | null>;
@@ -17,11 +17,12 @@ export declare type StateDefinition = {
     unregisterPanel(panel: PanelData): void;
 };
 export declare function useTabsContext(component: string): Readable<StateDefinition>;
-import type { Readable, Writable } from "svelte/store";
-import type { SupportedAs } from "../../internal/elements";
+import type { Readable, Writable } from 'svelte/store';
+import type { SupportedAs } from '../../internal/elements';
 declare class __sveltets_Render<TAsProp extends SupportedAs> {
     props(): Omit<import("../../types").TRenderProps<{
         selectedIndex: number | null;
+        api: Writable<StateDefinition>;
     }, TAsProp, "div">, import("../../types").TInternalProps | "as" | "static" | "unmount"> & {
         as?: TAsProp | undefined;
     } & {
@@ -44,6 +45,7 @@ declare class __sveltets_Render<TAsProp extends SupportedAs> {
     slots(): {
         default: {
             selectedIndex: number | null;
+            api: Writable<StateDefinition>;
         };
     };
 }

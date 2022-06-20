@@ -1,5 +1,5 @@
 import { SvelteComponentTyped } from "svelte";
-import type { Readable } from "svelte/store";
+import type { Readable, Writable } from 'svelte/store';
 export interface Option {
     id: string;
     element: HTMLElement | null;
@@ -16,12 +16,14 @@ export interface StateDefinition {
     containsCheckedOption: boolean;
     change(nextValue: unknown): boolean;
     registerOption(action: Option): void;
-    unregisterOption(id: Option["id"]): void;
+    unregisterOption(id: Option['id']): void;
 }
 export declare function useRadioGroupContext(component: string): Readable<StateDefinition>;
-import type { SupportedAs } from "../../internal/elements";
+import type { SupportedAs } from '../../internal/elements';
 declare class __sveltets_Render<TAsProp extends SupportedAs> {
-    props(): Omit<import("../../types").TRenderProps<{}, TAsProp, "div">, import("../../types").TInternalProps | "as" | "static" | "unmount"> & {
+    props(): Omit<import("../../types").TRenderProps<{
+        api: Writable<StateDefinition>;
+    }, TAsProp, "div">, import("../../types").TInternalProps | "as" | "static" | "unmount"> & {
         as?: TAsProp | undefined;
     } & {
         /** The currently selected value in the `RadioGroup` */
@@ -33,7 +35,9 @@ declare class __sveltets_Render<TAsProp extends SupportedAs> {
         [evt: string]: CustomEvent<any>;
     };
     slots(): {
-        default: {};
+        default: {
+            api: Writable<StateDefinition>;
+        };
     };
 }
 export declare type RadioGroupProps<TAsProp extends SupportedAs> = ReturnType<__sveltets_Render<TAsProp>['props']>;

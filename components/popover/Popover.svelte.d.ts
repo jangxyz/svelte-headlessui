@@ -19,12 +19,13 @@ export interface PopoverRegisterBag {
     close(): void;
 }
 export declare function usePopoverContext(component: string): Readable<StateDefinition>;
-import type { Readable, Writable } from "svelte/store";
-import type { SupportedAs } from "../../internal/elements";
+import type { Readable, Writable } from 'svelte/store';
+import type { SupportedAs } from '../../internal/elements';
 declare class __sveltets_Render<TAsProp extends SupportedAs> {
     props(): Omit<import("../../types").TRenderProps<{
         open: boolean;
         close: (focusableElement: HTMLElement | null) => void;
+        api: Writable<StateDefinition>;
     }, TAsProp, "div">, import("../../types").TInternalProps | "as" | "static" | "unmount"> & {
         as?: TAsProp | undefined;
     };
@@ -35,6 +36,7 @@ declare class __sveltets_Render<TAsProp extends SupportedAs> {
         default: {
             open: boolean;
             close: (focusableElement: HTMLElement | null) => void;
+            api: Writable<StateDefinition>;
         };
     };
 }

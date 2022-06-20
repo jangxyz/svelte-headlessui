@@ -1,7 +1,7 @@
 import { SvelteComponentTyped } from "svelte";
-import { Focus } from "../../utils/calculate-active-index";
-import type { Readable, Writable } from "svelte/store";
-import type { SupportedAs } from "../../internal/elements";
+import { Focus } from '../../utils/calculate-active-index';
+import type { Readable, Writable } from 'svelte/store';
+import type { SupportedAs } from '../../internal/elements';
 export declare enum MenuStates {
     Open = 0,
     Closed = 1
@@ -32,6 +32,7 @@ export declare function useMenuContext(componentName: string): Readable<StateDef
 declare class __sveltets_Render<TAsProp extends SupportedAs> {
     props(): Omit<import("../../types").TRenderProps<{
         open: boolean;
+        api: Writable<StateDefinition>;
     }, TAsProp, "div">, import("../../types").TInternalProps | "as" | "static" | "unmount"> & {
         as?: TAsProp | undefined;
     };
@@ -41,6 +42,7 @@ declare class __sveltets_Render<TAsProp extends SupportedAs> {
     slots(): {
         default: {
             open: boolean;
+            api: Writable<StateDefinition>;
         };
     };
 }

@@ -11,7 +11,7 @@ export declare type ListboxOptionDataRef = {
 export declare type StateDefinition = {
     listboxState: ListboxStates;
     value: unknown;
-    orientation: "vertical" | "horizontal";
+    orientation: 'vertical' | 'horizontal';
     labelRef: Writable<HTMLLabelElement | null>;
     buttonRef: Writable<HTMLButtonElement | null>;
     optionsRef: Writable<HTMLElement | null>;
@@ -32,12 +32,13 @@ export declare type StateDefinition = {
     select(value: unknown): void;
 };
 export declare function useListboxContext(component: string): Readable<StateDefinition>;
-import { Focus } from "../../utils/calculate-active-index";
-import type { Readable, Writable } from "svelte/store";
-import type { SupportedAs } from "../../internal/elements";
+import { Focus } from '../../utils/calculate-active-index';
+import type { Readable, Writable } from 'svelte/store';
+import type { SupportedAs } from '../../internal/elements';
 declare class __sveltets_Render<TAsProp extends SupportedAs> {
     props(): Omit<import("../../types").TRenderProps<{
         open: boolean;
+        api: Writable<StateDefinition>;
     }, TAsProp, "div">, import("../../types").TInternalProps | "as" | "static" | "unmount"> & {
         as?: TAsProp | undefined;
     } & {
@@ -56,6 +57,7 @@ declare class __sveltets_Render<TAsProp extends SupportedAs> {
     slots(): {
         default: {
             open: boolean;
+            api: Writable<StateDefinition>;
         };
     };
 }

@@ -1,4 +1,4 @@
-<script  context="module">const TABS_CONTEXT_NAME = "headlessui-tabs-context";
+<script  context="module">const TABS_CONTEXT_NAME = 'headlessui-tabs-context';
 export function useTabsContext(component) {
     let context = getContext(TABS_CONTEXT_NAME);
     if (context === undefined) {
@@ -8,20 +8,18 @@ export function useTabsContext(component) {
 }
 </script>
 
-<script >import { createEventDispatcher, getContext, onMount, setContext, } from "svelte";
-import { writable } from "svelte/store";
-import { forwardEventsBuilder } from "../../internal/forwardEventsBuilder";
-import { get_current_component } from "svelte/internal";
-import Render from "../../utils/Render.svelte";
-export let as = "div";
+<script >import { createEventDispatcher, getContext, onMount, setContext } from 'svelte';
+import { writable } from 'svelte/store';
+import { forwardEventsBuilder } from '../../internal/forwardEventsBuilder';
+import { get_current_component } from 'svelte/internal';
+import Render from '../../utils/Render.svelte';
+export let as = 'div';
 export let use = [];
 export let defaultIndex = 0;
 export let vertical = false;
 export let manual = false;
 /***** Events *****/
-const forwardEvents = forwardEventsBuilder(get_current_component(), [
-    "change",
-]);
+const forwardEvents = forwardEventsBuilder(get_current_component(), ['change']);
 const dispatch = createEventDispatcher();
 /***** Component *****/
 let selectedIndex = null;
@@ -30,8 +28,8 @@ let panels = [];
 let listRef = writable(null);
 let api = writable({
     selectedIndex,
-    orientation: vertical ? "vertical" : "horizontal",
-    activation: manual ? "manual" : "auto",
+    orientation: vertical ? 'vertical' : 'horizontal',
+    activation: manual ? 'manual' : 'auto',
     tabs,
     panels,
     listRef,
@@ -39,7 +37,7 @@ let api = writable({
         if (selectedIndex === index)
             return;
         selectedIndex = index;
-        dispatch("change", index);
+        dispatch('change', index);
     },
     registerTab(tab) {
         if (tabs.includes(tab))
@@ -77,8 +75,8 @@ $: api.update((obj) => {
     return {
         ...obj,
         selectedIndex,
-        orientation: vertical ? "vertical" : "horizontal",
-        activation: manual ? "manual" : "auto",
+        orientation: vertical ? 'vertical' : 'horizontal',
+        activation: manual ? 'manual' : 'auto',
         tabs,
         panels,
     };
@@ -89,7 +87,7 @@ onMount(() => {
     if (selectedIndex !== null)
         return;
     let mountedTabs = tabs.filter(Boolean);
-    let focusableTabs = mountedTabs.filter((tab) => !tab.hasAttribute("disabled"));
+    let focusableTabs = mountedTabs.filter((tab) => !tab.hasAttribute('disabled'));
     if (focusableTabs.length <= 0)
         return;
     // Underflow
@@ -110,15 +108,9 @@ onMount(() => {
         selectedIndex = mountedTabs.indexOf(next);
     }
 });
-$: slotProps = { selectedIndex };
+$: slotProps = { selectedIndex, api };
 </script>
 
-<Render
-  {...$$restProps}
-  {as}
-  {slotProps}
-  use={[...use, forwardEvents]}
-  name={"TabGroup"}
->
+<Render {...$$restProps} {as} {slotProps} use={[...use, forwardEvents]} name={'TabGroup'}>
   <slot {...slotProps} />
 </Render>

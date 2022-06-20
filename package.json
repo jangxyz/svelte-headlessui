@@ -15,7 +15,7 @@
   },
   "license": "MIT",
   "repository": "github:rgossiaux/svelte-headlessui",
-  "version": "1.0.2+jangxyz-patch.1",
+  "version": "1.0.2+jangxyz-patch.2",
   "peerDependencies": {
     "svelte": "^3.44.0"
   },

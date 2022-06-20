@@ -1,10 +1,10 @@
-<script  context="module">import { getContext, setContext, createEventDispatcher, tick, onDestroy, onMount, } from "svelte";
+<script  context="module">import { getContext, setContext, createEventDispatcher, tick, onDestroy, onMount } from 'svelte';
 export var DialogStates;
 (function (DialogStates) {
     DialogStates[DialogStates["Open"] = 0] = "Open";
     DialogStates[DialogStates["Closed"] = 1] = "Closed";
 })(DialogStates || (DialogStates = {}));
-const DIALOG_CONTEXT_NAME = "headlessui-dialog-context";
+const DIALOG_CONTEXT_NAME = 'headlessui-dialog-context';
 export function useDialogContext(component) {
     let context = getContext(DIALOG_CONTEXT_NAME);
     if (context === undefined) {
@@ -14,31 +14,29 @@ export function useDialogContext(component) {
 }
 </script>
 
-<script >import { State, useOpenClosed } from "../../internal/open-closed";
-import { writable } from "svelte/store";
-import { match } from "../../utils/match";
-import { useId } from "../../hooks/use-id";
-import { useInertOthers } from "../../hooks/use-inert-others";
-import { contains } from "../../internal/dom-containers";
-import { Keys } from "../../utils/keyboard";
-import FocusTrap from "../focus-trap/FocusTrap.svelte";
-import StackContextProvider, { StackMessage, } from "../../internal/StackContextProvider.svelte";
-import DescriptionProvider from "../description/DescriptionProvider.svelte";
-import ForcePortalRootContext from "../../internal/ForcePortalRootContext.svelte";
-import Portal from "../portal/Portal.svelte";
-import PortalGroup from "../portal/PortalGroup.svelte";
-import { forwardEventsBuilder } from "../../internal/forwardEventsBuilder";
-import { get_current_component } from "svelte/internal";
-import Render from "../../utils/Render.svelte";
-import { Features } from "../../types";
-export let as = "div";
+<script >import { State, useOpenClosed } from '../../internal/open-closed';
+import { writable } from 'svelte/store';
+import { match } from '../../utils/match';
+import { useId } from '../../hooks/use-id';
+import { useInertOthers } from '../../hooks/use-inert-others';
+import { contains } from '../../internal/dom-containers';
+import { Keys } from '../../utils/keyboard';
+import FocusTrap from '../focus-trap/FocusTrap.svelte';
+import StackContextProvider, { StackMessage } from '../../internal/StackContextProvider.svelte';
+import DescriptionProvider from '../description/DescriptionProvider.svelte';
+import ForcePortalRootContext from '../../internal/ForcePortalRootContext.svelte';
+import Portal from '../portal/Portal.svelte';
+import PortalGroup from '../portal/PortalGroup.svelte';
+import { forwardEventsBuilder } from '../../internal/forwardEventsBuilder';
+import { get_current_component } from 'svelte/internal';
+import Render from '../../utils/Render.svelte';
+import { Features } from '../../types';
+export let as = 'div';
 export let use = [];
 export let open = undefined;
 export let initialFocus = null;
 /***** Events *****/
-const forwardEvents = forwardEventsBuilder(get_current_component(), [
-    "close",
-]);
+const forwardEvents = forwardEventsBuilder(get_current_component(), ['close']);
 const dispatch = createEventDispatcher();
 /***** Component *****/
 let containers = new Set();
@@ -56,15 +54,12 @@ $: {
     if (!hasOpen) {
         throw new Error(`You forgot to provide an \`open\` prop to the \`Dialog\` component.`);
     }
-    if (typeof open !== "boolean") {
+    if (typeof open !== 'boolean') {
         throw new Error(`You provided an \`open\` prop to the \`Dialog\`, but the value is not a boolean. Received: ${open}`);
     }
 }
 $: dialogState = open ? DialogStates.Open : DialogStates.Closed;
-$: visible =
-    openClosedState !== undefined
-        ? $openClosedState === State.Open
-        : dialogState === DialogStates.Open;
+$: visible = openClosedState !== undefined ? $openClosedState === State.Open : dialogState === DialogStates.Open;
 let internalDialogRef = null;
 $: enabled = dialogState === DialogStates.Open;
 const id = `headlessui-dialog-${useId()}`;
@@ -89,7 +84,7 @@ let api = writable({
         titleId = id;
     },
     close() {
-        dispatch("close", false);
+        dispatch('close', false);
     },
 });
 setContext(DIALOG_CONTEXT_NAME, api);
@@ -138,7 +133,7 @@ $: _cleanupScrollLock = (() => {
     let overflow = document.documentElement.style.overflow;
     let paddingRight = document.documentElement.style.paddingRight;
     let scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-    document.documentElement.style.overflow = "hidden";
+    document.documentElement.style.overflow = 'hidden';
     document.documentElement.style.paddingRight = `${scrollbarWidth}px`;
     return () => {
         document.documentElement.style.overflow = overflow;
@@ -183,17 +178,14 @@ function handleClick(e) {
 }
 $: propsWeControl = {
     id,
-    role: "dialog",
-    "aria-modal": dialogState === DialogStates.Open ? true : undefined,
-    "aria-labelledby": titleId,
+    role: 'dialog',
+    'aria-modal': dialogState === DialogStates.Open ? true : undefined,
+    'aria-labelledby': titleId,
 };
-$: slotProps = { open };
+$: slotProps = { open, api };
 </script>
 
-<svelte:window
-  on:mousedown={handleWindowMousedown}
-  on:keydown={handleWindowKeydown}
-/>
+<svelte:window on:mousedown={handleWindowMousedown} on:keydown={handleWindowKeydown} />
 <FocusTrap {containers} {enabled} options={{ initialFocus }} />
 <StackContextProvider
   element={internalDialogRef}
@@ -213,17 +205,13 @@ $: slotProps = { open };
     <Portal>
       <PortalGroup target={internalDialogRef}>
         <ForcePortalRootContext force={false}>
-          <DescriptionProvider
-            name={"DialogDescription"}
-            {slotProps}
-            let:describedby
-          >
+          <DescriptionProvider name={'DialogDescription'} {slotProps} let:describedby>
             <Render
               {...{ ...$$restProps, ...propsWeControl }}
               {as}
               {slotProps}
               use={[...use, forwardEvents]}
-              name={"Dialog"}
+              name={'Dialog'}
               bind:el={internalDialogRef}
               aria-describedby={describedby}
               on:click={handleClick}

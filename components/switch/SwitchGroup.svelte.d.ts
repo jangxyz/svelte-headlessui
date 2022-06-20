@@ -3,17 +3,21 @@ export interface StateDefinition {
     switchStore: Writable<HTMLButtonElement | null>;
 }
 export declare function useSwitchContext(): Writable<StateDefinition> | undefined;
-import type { Writable } from "svelte/store";
-import type { SupportedAs } from "../../internal/elements";
+import type { Writable } from 'svelte/store';
+import type { SupportedAs } from '../../internal/elements';
 declare class __sveltets_Render<TAsProp extends SupportedAs> {
-    props(): Omit<import("../../types").TRenderProps<{}, TAsProp, "div">, import("../../types").TInternalProps | "as" | "static" | "unmount"> & {
+    props(): Omit<import("../../types").TRenderProps<{
+        api: Writable<StateDefinition>;
+    }, TAsProp, "div">, import("../../types").TInternalProps | "as" | "static" | "unmount"> & {
         as?: TAsProp | undefined;
     };
     events(): {} & {
         [evt: string]: CustomEvent<any>;
     };
     slots(): {
-        default: {};
+        default: {
+            api: Writable<StateDefinition>;
+        };
     };
 }
 export declare type SwitchGroupProps<TAsProp extends SupportedAs> = ReturnType<__sveltets_Render<TAsProp>['props']>;
